@@ -134,6 +134,28 @@ def save_espi_xml(self, xml_data, filename=None):
         file.write(xml_data)
     return save_name
 
+def is_safe_path(basedir, path, follow_symlinks=True):
+    # resolves symbolic links
+    if follow_symlinks:
+        matchpath = os.path.realpath(path)
+    else:
+        matchpath = os.path.abspath(path)
+    _LOGGER.debug(f"basedir: {basedir}")
+    _LOGGER.debug(f"commonpath: {os.path.commonpath((basedir, matchpath))}")
+    return basedir == os.path.commonpath((basedir, matchpath))
+
+
+def read_espi_xml(filename=None):
+    """Read ESPI XML."""
+    load_name = f"{os.getcwd()}/data/espi_xml/{filename}"
+    
+    if is_safe_path(f"{os.getcwd()}/data/espi_xml", load_name, False):
+        _LOGGER.debug(f"Reading ... {load_name}")
+        with open(load_name, "r") as file:
+            return file.read()
+    _LOGGER.debug(f"Error reading ... {load_name}")
+    return ""
+
 
 def get_emoncms_from_espi(xml_data, emoncms_node=30):
     """Parse ESPI data for export to emonCMS."""
