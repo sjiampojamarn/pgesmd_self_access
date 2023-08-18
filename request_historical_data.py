@@ -4,7 +4,7 @@ from pgesmd_self_access.helpers import save_espi_xml
 
 def main():
   pge_api = SelfAccessApi.auth('/root/auth/auth.json')
-  pge_api.request_historical_data(60)
+  pge_api.request_historical_data(120)
  
 
 # Using the special variable 
