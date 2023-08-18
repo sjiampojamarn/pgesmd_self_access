@@ -12,6 +12,7 @@ COPY pgesmd_self_access pgesmd_self_access
 RUN pip3 install -r requirements.txt
 
 COPY SelfAccessServer.py .
+COPY request_historical_data.py .
 COPY entrypoint.sh .
 RUN chmod 755 entrypoint.sh
 ENTRYPOINT ["/pgesmd/entrypoint.sh"]
