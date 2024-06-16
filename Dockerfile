@@ -9,7 +9,7 @@ RUN apt-get update \
 WORKDIR /pgesmd
 COPY requirements.txt .
 COPY pgesmd_self_access pgesmd_self_access
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt  --break-system-packages
 
 COPY SelfAccessServer.py .
 COPY request_historical_data.py .
