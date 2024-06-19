@@ -153,14 +153,11 @@ class SelfAccessServer:
         PgePostHandler.save_file = save_file
         PgePostHandler.filename = filename
         PgePostHandler.to_db = to_db
-        server = HTTPServer(("", 7999), PgePostHandler)
 
-        server.socket = ssl.wrap_socket(
-            server.socket,
-            certfile=api_instance.cert[0],
-            keyfile=api_instance.cert[1],
-            server_side=True,
-        )
+        context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        context.load_cert_chain(certfile=api_instance.cert[0], keyfile=api_instance.cert[1])
+        server = HTTPServer(("", 7999), PgePostHandler)
+        server.socket = context.wrap_socket(server.socket, server_side=True)
 
         if close_after:
             server.handle_request()
