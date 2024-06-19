@@ -137,7 +137,7 @@ class PgePostHandler(BaseHTTPRequestHandler):
                 for record in parse_espi_data_from_xml(xml_data):
                     influxdb_access_api.pushData(record)
                     record_count += 1
-                    if (record_count % 500) == 0:
+                    if (record_count % 100) == 0:
                         _LOGGER.info(f"Database: pushed {record_count} records so far")
                 _LOGGER.info(f"Database: pushed {record_count} records")
 
